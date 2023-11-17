@@ -9,14 +9,14 @@ int main(){
     string data;
     getline(read, data);
     read.close();
-    tree* root = new tree("Think of an animal, and enter y when you have one. To answer a question type y for yes and n for no.");
-    
+    tree* root = new tree("Think of an animal, and then enter y when you have one. Use y for yes and n for no.");
     root->setRight(tree::deserialize(data));
+    tree* useLater = root;
     cout << root->getData();
     string choice;
     cin >> choice;
     do{
-        cout << root->getData();
+        cout << root->getRight()->getData();
         cin >> choice;
         if(choice == "y"){
             root = root->getRight();
@@ -25,7 +25,7 @@ int main(){
         }else{
             cout<< "You didn't enter a valid option";
         }
-    }while(root->getLeft() != NULL && root->getRight() != NULL);
+    }while((root->getLeft() != NULL && root->getRight() != NULL) || root->getRight() == NULL);
     if(choice == "n"){
         cout << "What was your animal?";
         string animal;
@@ -35,7 +35,7 @@ int main(){
         cin >> *question;
         tree* anotherTree = new tree(*question);
         root->setRight(anotherTree);
-        root =root->getRight();
+        root = root->getRight();
         tree* animalTree = new tree("Is your animal a " + animal + "?");
         root->setRight(animalTree);
         }
@@ -43,7 +43,7 @@ int main(){
     {
         cout << "Thanks for playing!";
     }
-    data = root->serialize(root);
+    data = root->serialize(useLater);
     ofstream write;
     write.open("AnimalTree.txt", ofstream::out | ofstream::trunc);
     write << data;
