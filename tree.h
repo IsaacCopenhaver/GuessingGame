@@ -9,6 +9,7 @@ class tree{
         std::string s;
     public:
         tree(std::string _s);
+        tree(tree* _node);
         void setData(std::string _s);
         std::string getData();
         tree* getLeft();

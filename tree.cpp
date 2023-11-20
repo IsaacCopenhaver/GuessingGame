@@ -9,6 +9,11 @@ tree::tree(std::string _s) {
     left = nullptr;
     right = nullptr;
 }
+tree::tree(tree* _node){
+    s = _node->getData();
+    left = _node->getLeft();
+    right = _node->getRight();
+}
 
 // Getter for data
 std::string tree::getData() {
@@ -67,7 +72,7 @@ return NULL;
             q.pop(); 
             
             getline(s, str, ',');
-            if(str == "#") {
+            if(str == "#" || str.empty()) {
                 node->left = NULL; 
             }
             else {
